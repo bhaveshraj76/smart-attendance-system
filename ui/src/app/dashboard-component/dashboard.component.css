@@ -1,0 +1,18 @@
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.widget-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+.dashboard-widget {
+  flex: 1;
+  padding: 16px;
+  text-align: center;
+}
+.list-widget {
+  padding: 24px;
+}

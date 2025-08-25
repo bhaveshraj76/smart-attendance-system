@@ -1,0 +1,57 @@
+<h3>My Digital - Attendance System</h3>
+<div class="weekly">
+<select id="weekSelect" (change)="onWeekChange($event)" [value]="selectedWeekNo || ''">
+  <option value="" disabled>Select week</option>
+  <option *ngFor="let week of weeks" [value]="week.week_no">
+    Week {{ week.week_no }}: {{ week.start_date }} to {{ week.end_date }}
+  </option>
+</select>
+
+<p *ngIf="selectedWeekNo">You selected week {{ selectedWeekNo }}</p>
+</div>
+<div class="dashboard-grid">
+  <div class="widget-row">
+    <div class="dashboard-widget widget1">
+      Late Arrival
+      <div class="count">{{ lateArrivalCount }}</div>
+    </div>
+    <div class="dashboard-widget widget2">
+      Early Leaver
+      <div class="count">{{ earlyLeaverCount }}</div>
+    </div>
+    <div class="dashboard-widget widget3">
+      Overtime Count
+      <div class="count">{{ overtimeCount }}</div>
+    </div>
+    <div class="dashboard-widget widget4">
+      Overtime Count
+      <div class="count">{{ overtimeCount }}</div>
+    </div>
+  </div>
+
+  <div class="list-widget">
+    <h3>Top 5 Punctual Employees</h3>
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>IN</th>
+          <th>OUT</th>
+          <th>Total Hours</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of studentList">
+          <td>{{ student.name }}</td>
+          <td>{{ student.date }}</td>
+          <td>{{ student.in }}</td>
+          <td>{{ student.out }}</td>
+          <td>{{ student.hours }}</td>
+          <td>{{ student.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
