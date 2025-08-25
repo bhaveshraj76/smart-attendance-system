@@ -7,7 +7,7 @@
 /bazel-out
 
 # Node
-/node_modules
+uinode_modules
 npm-debug.log
 yarn-error.log
 

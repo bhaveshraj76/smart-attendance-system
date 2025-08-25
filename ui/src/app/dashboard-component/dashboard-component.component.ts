@@ -109,7 +109,7 @@ h3 {
   position: relative;
   letter-spacing: 1px;
 }
- 
+
 /* Underline accent */
 h3::after {
   content: "";
@@ -129,7 +129,7 @@ label {
   color: #333;
 }
 .weekly{
-  
+
 }
 
 /* Style for the select dropdown */
@@ -171,7 +171,7 @@ select:disabled {
 `]
 })
 export class DashboardComponentComponent {
-  data: any; 
+  data: any;
  displayedColumns: string[] = ['name', 'date', 'in', 'out', 'hours', 'status'];
   studentList = [
     { name: 'John Doe', date: '2025-08-25', in: '9:05', out: '17:30', hours: 8.5, status: 'Late' },
@@ -253,8 +253,10 @@ onWeekChange(event: any) {
   lateArrivalCount: number = 0;
   earlyLeaverCount: number = 0;
   overtimeCount: number = 0;
+  checkOutMiss:number = 0;
+  aiText: any;
 constructor(private http: HttpClient) {
-  
+
 }
   ngOnInit() {
     // Simulating backend data response
@@ -267,19 +269,38 @@ constructor(private http: HttpClient) {
         },
       },
     };
-  
+
   }
    weekavg(startDate: string, endDate: string): void {
-    
+
       // Create URL with query params
-      const url = 'http://192.168.1.132:8000/attendance/weekly-average';
+      const url = 'http://localhost:8000/attendance/analysis';
+      const url2 = 'http://localhost:8000/attendance/top-punctual'
       const params = { start_date: startDate, end_date: endDate };
-      
+
 
       this.http.get(url, { params })
         .subscribe({
           next: (response: any) => {
             this.data = response;
+            console.log(this.data)
+            this.lateArrivalCount = this.data.counts.late_comers_count
+            this.earlyLeaverCount =this.data.counts.early_comers_count
+            this.overtimeCount =this.data.counts.overtime_count
+            this.checkOutMiss = this.data.counts.missing_checkout_count
+            console.log('Data received:', this.data);
+          },
+          error: (error: any) => {
+            console.error('Error fetching data:', error);
+          }
+        });
+
+        this.http.get(url2, { params })
+        .subscribe({
+          next: (response: any) => {
+            this.data = response;
+            console.log(this.data.ai_analysis)
+            this.aiText = this.data.ai_analysis
             console.log('Data received:', this.data);
           },
           error: (error: any) => {
@@ -287,6 +308,7 @@ constructor(private http: HttpClient) {
           }
         });
     }
+
 
 
     // Assign backend data to component properties
